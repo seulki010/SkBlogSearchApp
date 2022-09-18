@@ -1,5 +1,10 @@
 # SkBlogSearch
 
+**다운로드 링크**
+
+Release 참조
+[https://github.com/seulki010/SkBlogSearchApp/releases/download/1.0.0/SkBlogSearch_1.0.0.jar](https://github.com/seulki010/SkBlogSearchApp/releases/download/1.0.0/SkBlogSearch_1.0.0.jar)
+
 ## 블로그 검색
 ### 기본 정보
 
