@@ -1,5 +1,6 @@
 package com.example.demoSkSearch.exception;
 
+import com.example.demoSkSearch.response.BasicResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -12,15 +13,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ErrorResult missingParamExHandle(MissingServletRequestParameterException e) {
+    public BasicResponse missingParamExHandle(MissingServletRequestParameterException e) {
         log.error("[MissingServletRequestParameterException] ex", e);
-        return new ErrorResult(ErrorResult.MISSING_PARAM, e.getMessage());
+        return new BasicResponse(BasicResponse.NOK,e.getMessage(),null);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler
-    public ErrorResult exHandle(Exception e) {
+    public BasicResponse exHandle(Exception e) {
         log.error("[exceptionHandle] ex", e);
-        return new ErrorResult(ErrorResult.INTERNAL_ERR, "internal server error");
+        return new BasicResponse(BasicResponse.NOK,e.getMessage(), null);
     }
 }
