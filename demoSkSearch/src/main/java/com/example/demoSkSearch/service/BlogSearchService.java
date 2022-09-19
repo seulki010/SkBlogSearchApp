@@ -7,6 +7,7 @@ import com.example.demoSkSearch.service.externAPI.NaverAPI;
 import com.example.demoSkSearch.vo.KakaoResponseDTO;
 import com.example.demoSkSearch.vo.NaverResponseDTO;
 import com.example.demoSkSearch.vo.SearchKeyword;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class BlogSearchService{
     @Autowired
@@ -28,6 +30,7 @@ public class BlogSearchService{
         Integer size = (Integer) reqBody.get("size");
 
         BasicResponse res = new BasicResponse();
+
 
         // error case
         if(sort != null &&
@@ -59,14 +62,14 @@ public class BlogSearchService{
         try{
             kakaoResp = KakaoAPI.getBlogSearch(query,sort,page,size);
         }catch(RestClientException e){
-            e.printStackTrace();
+            log.error("[kakao RestClientException]: ", e);
         }finally {
 
             if(kakaoResp == null){
                 try {
                     naverResp = NaverAPI.getBlogSearch(query, sort, page, size);
                 }catch(RestClientException e){
-                    e.printStackTrace();
+                    log.error("[naver RestClientException]: ", e);
                 }
             }
         }
@@ -91,6 +94,8 @@ public class BlogSearchService{
 
             return res;
         }
+
+        log.error("[total response failed]: ");
 
         res.setStatus(BasicResponse.NOK);
         res.setReason("API Call is temporary failed. Try again later");
